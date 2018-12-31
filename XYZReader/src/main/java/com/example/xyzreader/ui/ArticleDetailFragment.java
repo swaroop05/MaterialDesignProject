@@ -18,6 +18,7 @@ import java.util.GregorianCalendar;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
@@ -241,6 +242,7 @@ public class ArticleDetailFragment extends Fragment implements
             bodyText = bodyText.replaceAll("\\[.*?\\] ?","");
             bodyText = bodyText.replace(" > ","");
             bodyView.setText(Html.fromHtml(bodyText));
+            Snackbar.make(mRootView, "Entire Article is loaded", Snackbar.LENGTH_SHORT).show();
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override

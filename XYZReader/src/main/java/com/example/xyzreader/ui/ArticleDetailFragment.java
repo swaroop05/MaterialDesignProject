@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
@@ -51,7 +52,8 @@ public class ArticleDetailFragment extends Fragment implements
     private View mRootView;
     private int mMutedColor = 0xFF333333;
     private ColorDrawable mStatusBarColorDrawable;
-
+    TextView toolbarTitle;
+    private AppBarLayout mAppBarLayout;
     private int mTopInset;
     /*private View mPhotoContainerView;*/
     private ImageView mPhotoView;
@@ -117,6 +119,28 @@ public class ArticleDetailFragment extends Fragment implements
         /*mPhotoContainerView = mRootView.findViewById(R.id.photo_container);*/
 
         mStatusBarColorDrawable = new ColorDrawable(0);
+        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.fragment_app_bar_layout);
+        toolbarTitle = (TextView) mRootView.findViewById(R.id.toolbar_title);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0)
+                {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    //  Collapsed
+
+
+                }
+                else
+                {
+                    toolbarTitle.setVisibility(View.INVISIBLE);
+                    //Expanded
+
+
+                }
+            }
+        });
 
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +214,7 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            toolbarTitle.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 bylineView.setText(Html.fromHtml(

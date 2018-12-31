@@ -6,7 +6,8 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/fragment_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        app:elevation="@dimen/app_bar_elevation">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -116,6 +117,7 @@
         android:src="@drawable/ic_share"
         app:fabSize="normal"
         android:layout_gravity="bottom|right"
+        android:elevation="@dimen/fab_elevation"
         android:stateListAnimator="@anim/fab_state_list_anim"
         />
 
